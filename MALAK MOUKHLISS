@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function count_files {
+    echo $(ls -1 | wc -l)
+}
+
+file_count=$(count_files)
+
+echo "Bienvenue dans le jeu de devinette !"
+echo "Devinez combien de fichiers se trouvent dans le répertoire actuel :"
+
+while true; do
+    read -p "Votre réponse : " guess
+
+    if ! [[ "$guess" =~ ^[0-9]+$ ]]; then
+        echo "Veuillez entrer un nombre valide."
+        continue
+    fi
+
+    if [[ $guess -lt $file_count ]]; then
+        echo "C'est trop bas ! Essayez encore."
+    elif [[ $guess -gt $file_count ]]; then
+        echo "C'est trop haut ! Essayez encore."
+    else
+        echo "Félicitations ! Vous avez deviné correctement."
+        break
+    fi
+done
